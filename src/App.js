@@ -7,7 +7,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-        value: ''
+      value: ''
     };
 
   }
@@ -19,12 +19,11 @@ class App extends Component {
   }
 
   onSubmit = (event) => {
-    event.preventDefault();
     console.log('clicked');
   }
 
   onKeyPress = (event) => {
-    if(event.key === 'Enter') {
+    if (event.key === 'Enter') {
       console.log('enter');
     }
   }
@@ -33,16 +32,13 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <form className ="form">
+        <form className="form">
           <label className="label">
             Infinite loop team members:
-            <input type="text" className="input" value={this.state.value} onChange={this.onHandleChange} onKeyPress={this.onKeyPress}/>
-           </label>
-           <button className="buttonOK" onClick={this.onSubmit}>OK</button>
+            <input type="text" className="input" value={this.state.value} onChange={this.onHandleChange} onKeyPress={this.onKeyPress} />
+          </label>
+          <button className="buttonOK" onClick={this.onSubmit}>OK</button>
         </form>
-        <div>
-
-        </div>
       </div>
     );
   }
