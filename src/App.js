@@ -7,7 +7,9 @@ class App extends Component {
     super(props);
 
     this.state = {
-      value: ''
+      value: '',
+      names: [],
+      isCkecked: false
     };
 
   }
@@ -19,25 +21,68 @@ class App extends Component {
   }
 
   onSubmit = (event) => {
-    console.log('clicked');
+    event.preventDefault();
+    this.addNamesToList();
   }
 
   onKeyPress = (event) => {
     if (event.key === 'Enter') {
-      console.log('enter');
+      event.preventDefault();
+      this.addNamesToList();
     }
   }
 
+  addNamesToList = () => {
+
+    let names = this.state.names;
+    names.push(this.state.value);
+
+    this.setState({
+      names
+    });
+  }
+
+  onCheckBoxChange = () => {
+
+    this.setState({
+      isCkecked: !this.state.isCkecked
+    });
+
+    if (!this.state.isCkecked) {
+      window.alert("this name is checked");
+    } else {
+      window.alert("this name is unchecked");
+    }
+  }
 
   render() {
+    const pageTitle = "Infinite loop"
+    const title = "Enter team members";
     return (
       <div className="App">
+        <div className="title">
+          {pageTitle}
+        </div>
         <form className="form">
           <label className="label">
-            Infinite loop team members:
+            {title}
             <input type="text" className="input" value={this.state.value} onChange={this.onHandleChange} onKeyPress={this.onKeyPress} />
           </label>
           <button className="buttonOK" onClick={this.onSubmit}>OK</button>
+        </form>
+        <form className="list-form">
+          {
+            this.state.names.map((name) => {
+              return (
+                <React.Fragment>
+                  <p key={name.toString()}>
+                    {name}
+                    <input type="checkbox" onChange={this.onCheckBoxChange} defaultChecked={this.state.isCkecked}></input>
+                  </p>
+                </React.Fragment>
+              );
+            })
+          }
         </form>
       </div>
     );
