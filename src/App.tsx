@@ -106,12 +106,10 @@ class App extends React.Component<Props, State> {
           {
             this.state.names.map((name) => {
               return (
-                <React.Fragment>
                   <p key={name.toString()}>
                     {name}
                     <input type="checkbox" onChange={this.onCheckBoxChange} defaultChecked={this.state.isCkecked}></input>
                   </p>
-                </React.Fragment>
               );
             })
           }
