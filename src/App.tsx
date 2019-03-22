@@ -1,7 +1,17 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import './App.css';
 
-class App extends Component {
+interface Props {
+
+}
+
+interface State {
+  value: string,
+  names: any[],
+  isCkecked: boolean
+}
+
+class App extends React.Component<Props, State> {
 
   constructor(props) {
     super(props);
@@ -22,13 +32,31 @@ class App extends Component {
 
   onSubmit = (event) => {
     event.preventDefault();
-    this.addNamesToList();
+
+    if (this.state.value === '') {
+      window.alert('Please insert name');
+    } else {
+      this.addNamesToList();
+    }
+
+    this.setState({
+      isCkecked: false,
+      value: ''
+    });
   }
 
   onKeyPress = (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
-      this.addNamesToList();
+      if (this.state.value === '') {
+        window.alert('Please insert name');
+      } else {
+        this.addNamesToList();
+      }
+      this.setState({
+        isCkecked: false,
+        value: ''
+      });
     }
   }
 
@@ -49,15 +77,17 @@ class App extends Component {
     });
 
     if (!this.state.isCkecked) {
-      window.alert("this name is checked");
+      window.alert("This name is checked");
     } else {
-      window.alert("this name is unchecked");
+      window.alert("This name is unchecked");
     }
   }
 
   render() {
-    const pageTitle = "Infinite loop"
+    const pageTitle = "Infinite loop";
     const text = "Enter team member";
+    const buttonText = "Insert";
+    const subtitle = "List of team members:";
 
     return (
       <div className="App">
@@ -69,8 +99,9 @@ class App extends Component {
             {text}
             <input type="text" className="input" value={this.state.value} onChange={this.onHandleChange} onKeyPress={this.onKeyPress} />
           </label>
-          <button className="buttonOK" onClick={this.onSubmit}>OK</button>
+          <button className="buttonSubmit" onClick={this.onSubmit}>{buttonText}</button>
         </form>
+        <div className="list-title">{subtitle}</div>
         <form className="list-form">
           {
             this.state.names.map((name) => {
