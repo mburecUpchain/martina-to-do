@@ -57,7 +57,8 @@ class App extends Component {
 
   render() {
     const pageTitle = "Infinite loop"
-    const title = "Enter team members";
+    const text = "Enter team member";
+
     return (
       <div className="App">
         <div className="title">
@@ -65,7 +66,7 @@ class App extends Component {
         </div>
         <form className="form">
           <label className="label">
-            {title}
+            {text}
             <input type="text" className="input" value={this.state.value} onChange={this.onHandleChange} onKeyPress={this.onKeyPress} />
           </label>
           <button className="buttonOK" onClick={this.onSubmit}>OK</button>
