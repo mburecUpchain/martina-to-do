@@ -11,9 +11,15 @@ interface State {
   isCkecked: boolean
 }
 
+const emptyFieldMessage = 'Please insert name';
+const checked = 'This name is checked';
+const unchecked = 'This name is unchecked';
+
+
 class App extends React.Component<Props, State> {
 
-  constructor(props) {
+
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -34,7 +40,7 @@ class App extends React.Component<Props, State> {
     event.preventDefault();
 
     if (this.state.value === '') {
-      window.alert('Please insert name');
+      window.alert(emptyFieldMessage);
     } else {
       this.addNamesToList();
     }
@@ -49,7 +55,7 @@ class App extends React.Component<Props, State> {
     if (event.key === 'Enter') {
       event.preventDefault();
       if (this.state.value === '') {
-        window.alert('Please insert name');
+        window.alert(emptyFieldMessage);
       } else {
         this.addNamesToList();
       }
@@ -77,17 +83,17 @@ class App extends React.Component<Props, State> {
     });
 
     if (!this.state.isCkecked) {
-      window.alert("This name is checked");
+      window.alert(checked);
     } else {
-      window.alert("This name is unchecked");
+      window.alert(unchecked);
     }
   }
 
   render() {
-    const pageTitle = "Infinite loop";
-    const text = "Enter team member";
-    const buttonText = "Insert";
-    const subtitle = "List of team members:";
+    const pageTitle = 'Infinite loop';
+    const text = 'Enter team member';
+    const buttonText = 'Insert';
+    const subtitle = 'List of team members:';
 
     return (
       <div className="App">
@@ -106,10 +112,10 @@ class App extends React.Component<Props, State> {
           {
             this.state.names.map((name) => {
               return (
-                  <p key={name.toString()}>
-                    {name}
-                    <input type="checkbox" onChange={this.onCheckBoxChange} defaultChecked={this.state.isCkecked}></input>
-                  </p>
+                <p key={name.toString()}>
+                  {name}
+                  <input type="checkbox" onChange={this.onCheckBoxChange} defaultChecked={this.state.isCkecked}></input>
+                </p>
               );
             })
           }
