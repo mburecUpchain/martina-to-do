@@ -3,6 +3,22 @@
   margin-left: 10px;
   font-size: 20px;
   color: brown;
+  vertical-align: middle;
+}
+
+.left-logo {
+  width: 20px;
+  height: 15px;
+  margin-right: 20px;
+  margin-left: 2px;
+  vertical-align: middle;
+}
+
+.right-logo {
+  width: 20px;
+  height: 15px;
+  margin-left: 20px;
+  vertical-align: middle;
 }
 
 .form {
@@ -19,24 +35,50 @@
   width: 200px;
   height: 15px;
   margin-left: 5px;
-  border-color: darkgray;
-}
-
-.buttonSubmit{
-  margin-left: 5px;
-  border: 1px solid grey;
-  background-color: lightskyblue;
-  height: 22px;
+  border: 2px solid darkgray;
+  border-radius: 2px;
   vertical-align: middle;
 }
 
-.list-title{
-  margin-left: 10px;
-  margin-top: 5px;
-  font-size: 16px;
+.buttonSubmit {
+  margin-left: 5px;
+  border: 1px solid grey;
+  border-radius: 4px;
+  background-color: lightskyblue;
+  height: 23px;
+  vertical-align: middle;
 }
 
-.list-form {
-  margin-left: 20px;
-  margin-top: 10px;
+.container {
+  margin: 10px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+}
+
+.list-unchecked {
+  margin-top: 5px;
+}
+
+.list-form-unchecked {
+  height: 100px;
+}
+
+.list-checked {
+  margin-top: 5px;
+}
+
+.list-form-checked {
+  height: 100px;
 }

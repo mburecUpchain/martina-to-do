@@ -1,5 +1,6 @@
 import * as React from 'react';
 import './App.css';
+import logo from './images/inf.png';
 
 interface Props {
 
@@ -7,14 +8,10 @@ interface Props {
 
 interface State {
   value: string,
-  names: any[],
+  uncheckedNames: any[],
+  checkedNames: any[],
   isCkecked: boolean
 }
-
-const emptyFieldMessage = 'Please insert name';
-const checked = 'This name is checked';
-const unchecked = 'This name is unchecked';
-
 
 class App extends React.Component<Props, State> {
 
@@ -24,7 +21,8 @@ class App extends React.Component<Props, State> {
 
     this.state = {
       value: '',
-      names: [],
+      uncheckedNames: [],
+      checkedNames: [],
       isCkecked: false
     };
 
@@ -40,13 +38,13 @@ class App extends React.Component<Props, State> {
     event.preventDefault();
 
     if (this.state.value === '') {
-      window.alert(emptyFieldMessage);
+      window.alert('Please insert name');
     } else {
       this.addNamesToList();
     }
 
     this.setState({
-      isCkecked: false,
+      isCkecked: this.state.isCkecked,
       value: ''
     });
   }
@@ -55,12 +53,12 @@ class App extends React.Component<Props, State> {
     if (event.key === 'Enter') {
       event.preventDefault();
       if (this.state.value === '') {
-        window.alert(emptyFieldMessage);
+        window.alert('Please insert name');
       } else {
         this.addNamesToList();
       }
       this.setState({
-        isCkecked: false,
+        isCkecked: this.state.isCkecked,
         value: ''
       });
     }
@@ -68,58 +66,95 @@ class App extends React.Component<Props, State> {
 
   addNamesToList = () => {
 
-    let names = this.state.names;
-    names.push(this.state.value);
+    let uncheckedNames = this.state.uncheckedNames;
+    uncheckedNames.push(this.state.value);
 
     this.setState({
-      names
+      uncheckedNames: uncheckedNames,
+      isCkecked: !this.state.isCkecked,
+      checkedNames: this.state.checkedNames
     });
   }
 
-  onCheckBoxChange = () => {
+  moveNames = () => {
+
+    let checkedNames = this.state.checkedNames;
+    checkedNames.push(this.state.uncheckedNames);
 
     this.setState({
-      isCkecked: !this.state.isCkecked
+      checkedNames: checkedNames,
+      isCkecked: !this.state.isCkecked,
+      uncheckedNames: this.state.uncheckedNames
     });
+  }
 
+  // onCheckBoxChange = () => {
+
+  //   if (!this.state.isCkecked) {
+  //     this.moveNames();
+  //   } else {
+  //     this.addNamesToList();
+  //   }
+  // }
+
+  onNameClick = () => {
     if (!this.state.isCkecked) {
-      window.alert(checked);
+      this.moveNames();
     } else {
-      window.alert(unchecked);
+      this.addNamesToList();
     }
   }
 
   render() {
-    const pageTitle = 'Infinite loop';
-    const text = 'Enter team member';
-    const buttonText = 'Insert';
-    const subtitle = 'List of team members:';
 
     return (
       <div className="App">
         <div className="title">
-          {pageTitle}
+          <img className="left-logo" src={logo} />
+          Infinite loop
+          <img className="right-logo" src={logo} />
         </div>
-        <form className="form">
+        <div className="form">
           <label className="label">
-            {text}
+            Enter team member
             <input type="text" className="input" value={this.state.value} onChange={this.onHandleChange} onKeyPress={this.onKeyPress} />
           </label>
-          <button className="buttonSubmit" onClick={this.onSubmit}>{buttonText}</button>
-        </form>
-        <div className="list-title">{subtitle}</div>
-        <form className="list-form">
-          {
-            this.state.names.map((name) => {
-              return (
-                <p key={name.toString()}>
-                  {name}
-                  <input type="checkbox" onChange={this.onCheckBoxChange} defaultChecked={this.state.isCkecked}></input>
-                </p>
-              );
-            })
-          }
-        </form>
+          <button className="buttonSubmit" onClick={this.onSubmit}>Insert</button>
+        </div>
+        <div className="container">
+          <div className="row">
+            <div className="column">
+              <div className="list-unchecked">List of unchecked team members:</div>
+              <div className="list-form-uncehecked">
+                {
+                  this.state.uncheckedNames.map((name) => {
+                    return (
+                      <p key={name.toString()} onClick={this.onNameClick}>
+                        {name}
+                        <input type="checkbox" defaultChecked={this.state.isCkecked}></input>
+                      </p>
+                    );
+                  })
+                }
+              </div>
+            </div>
+            <div className="column">
+              <div className="list-checked">List of checked team members:</div>
+              <div className="list-form-checked">
+                {
+                  this.state.checkedNames.map((name) => {
+                    return (
+                      <p key={name.toString()} onClick={this.onNameClick}>
+                        {name}
+                        <input type="checkbox" defaultChecked={!this.state.isCkecked}></input>
+                      </p>
+                    );
+                  })
+                }
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
