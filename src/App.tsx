@@ -11,8 +11,7 @@ interface State {
   value: string,
   uncheckedNames: any[],
   checkedNames: any[],
-  isCkecked: boolean,
-  selectedName: any
+  isCkecked: boolean
 }
 
 class App extends React.Component<Props, State> {
@@ -25,8 +24,7 @@ class App extends React.Component<Props, State> {
       value: '',
       uncheckedNames: [],
       checkedNames: [],
-      isCkecked: false,
-      selectedName: null
+      isCkecked: false
     }
 
   }
@@ -82,32 +80,23 @@ class App extends React.Component<Props, State> {
     }
   }
 
-  moveNames = () => {
+  onNameClick = (item) => {
 
-    if (this.state.uncheckedNames.length > 0) {
+    var selectedName = this.state.uncheckedNames.includes(item);
+
+    this.setState({
+      uncheckedNames: selectedName ? this.state.uncheckedNames.filter(i => i !== item) : [...this.state.uncheckedNames, item],
+      checkedNames: selectedName ? [...this.state.checkedNames, item] : this.state.checkedNames.filter(i => i !== item)
+    });
+
+    if (selectedName === true) {
       this.setState({
-        checkedNames: this.state.uncheckedNames,
-        isCkecked: true,
-        uncheckedNames: this.state.uncheckedNames,
-        value: this.state.value
+        isCkecked: true
       });
-    } else if (this.state.checkedNames.length > 0) {
-      this.addNamesToList();
+    } else {
       this.setState({
-        checkedNames: this.state.uncheckedNames,
-        isCkecked: true,
-        uncheckedNames: this.state.uncheckedNames,
-        value: this.state.value
+        isCkecked: false
       });
-    }
-  }
-
-  onNameClick = () => {
-
-    if (this.state.checkedNames.length > 0 && this.state.isCkecked === true) {
-      this.addNamesToList();
-    } else if (this.state.uncheckedNames.length > 0 && this.state.isCkecked === false) {
-      this.moveNames();
     }
   }
 
@@ -126,6 +115,19 @@ class App extends React.Component<Props, State> {
     });
     this.setState({
       checkedNames: newCheckedNames
+    });
+  }
+
+  onCheckboxChange = () => {
+
+    if (!this.state.isCkecked) {
+      console.log('name is checked');
+    } else {
+      console.log('name is unchecked');
+    }
+
+    this.setState({
+      isCkecked: !this.state.isCkecked
     });
   }
 
@@ -157,10 +159,10 @@ class App extends React.Component<Props, State> {
                     return (
                       <div>
                         <div id="flex-container">
-                          <div className="flex-item" key={name.toString()} onClick={this.onNameClick}>
+                          <div className="flex-item" key={name.toString()} onClick={() => this.onNameClick(name)}>
                             {name}
                           </div>
-                          <input className="checkbox" type="checkbox" defaultChecked={this.state.isCkecked}></input>
+                          <input className="checkbox" type="checkbox" onChange={this.onCheckboxChange}></input>
                           <img className="clear-button" src={buttonClear} onClick={this.removeUncheckedNameFromList.bind(this, name)} />
                         </div>
                       </div>
@@ -178,10 +180,10 @@ class App extends React.Component<Props, State> {
                     return (
                       <div>
                         <div id="flex-container">
-                          <div className="flex-item" key={name.toString()} onClick={this.onNameClick}>
+                          <div className="flex-item" key={name.toString()} onClick={() => this.onNameClick(name)}>
                             {name}
                           </div>
-                          <input className="checkbox" type="checkbox" defaultChecked={this.state.isCkecked}></input>
+                          <input className="checkbox" type="checkbox" onChange={this.onCheckboxChange}></input>
                           <img className="clear-button" src={buttonClear} onClick={this.removeCheckedNameFromList.bind(this, name)} />
                         </div>
                       </div>
