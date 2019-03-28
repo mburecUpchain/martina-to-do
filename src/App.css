@@ -89,6 +89,25 @@
   height: 10px;
 }
 
+.spacer {
+  border: 1px solid green;
+  height: 500px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.button-sort {
+  height: 23px;
+  width: 50px;
+  margin-left: 5px;
+  margin-right: 5px;
+  border: 1px solid grey;
+  border-radius: 4px;
+  background-color: lightskyblue;
+  vertical-align: middle;
+  margin-top: 12%;
+}
+
 #flex-container {
   display: flex;
   flex-direction: row;

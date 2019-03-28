@@ -171,6 +171,9 @@ class App extends React.Component<Props, State> {
                 }
               </div>
             </div>
+            <div className="spacer"></div>
+            <button className="button-sort">Sort</button>
+            <div className="spacer"></div>
             <div className="column">
               <div className="list-checked">List of checked team members:</div>
               <div className="list-form-checked">
