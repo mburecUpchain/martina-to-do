@@ -34,7 +34,7 @@ class App extends React.Component<Props, State> {
       value: event.target.value,
       uncheckedNames: this.state.uncheckedNames,
       checkedNames: this.state.checkedNames,
-      isCkecked: false
+      isCkecked: this.state.isCkecked
     });
   }
 
@@ -74,7 +74,7 @@ class App extends React.Component<Props, State> {
       this.setState({
         uncheckedNames: this.state.uncheckedNames.concat(this.state.value),
         checkedNames: this.state.checkedNames,
-        isCkecked: false,
+        isCkecked: this.state.isCkecked,
         value: this.state.value
       });
     }
@@ -91,11 +91,12 @@ class App extends React.Component<Props, State> {
 
     if (selectedName === true) {
       this.setState({
-        isCkecked: true
+        isCkecked: !this.state.isCkecked
       });
+      console.log(this.state.isCkecked);
     } else {
       this.setState({
-        isCkecked: false
+        isCkecked: this.state.isCkecked
       });
     }
   }
@@ -131,6 +132,19 @@ class App extends React.Component<Props, State> {
     });
   }
 
+  sortNames = () => {
+    var sortedNamesUnchecked = this.state.uncheckedNames;
+    sortedNamesUnchecked.sort();
+
+    var sortedNamesChecked = this.state.checkedNames;
+    sortedNamesChecked.sort();
+
+    this.setState({
+      uncheckedNames: sortedNamesUnchecked,
+      checkedNames: sortedNamesChecked
+    });
+
+  }
 
   render() {
 
@@ -172,7 +186,7 @@ class App extends React.Component<Props, State> {
               </div>
             </div>
             <div className="spacer"></div>
-            <button className="button-sort">Sort</button>
+            <button className="button-sort" onClick={this.sortNames}>Sort</button>
             <div className="spacer"></div>
             <div className="column">
               <div className="list-checked">List of checked team members:</div>
