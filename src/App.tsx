@@ -11,7 +11,8 @@ interface State {
   value: string,
   uncheckedNames: any[],
   checkedNames: any[],
-  isCkecked: boolean
+  isCkecked: boolean,
+  selectedName: any
 }
 
 class App extends React.Component<Props, State> {
@@ -24,7 +25,8 @@ class App extends React.Component<Props, State> {
       value: '',
       uncheckedNames: [],
       checkedNames: [],
-      isCkecked: false
+      isCkecked: false,
+      selectedName: null
     }
 
   }
@@ -109,31 +111,24 @@ class App extends React.Component<Props, State> {
     }
   }
 
-  removeNameFromList = (event) => {
-    event.preventDefault();
-
-    if (this.state.checkedNames.length > 0) {
-      var checkedNames = [...this.state.checkedNames];
-      var index = checkedNames.indexOf(event.target.value);
-      if (index === -1) {
-        checkedNames.splice(index + 1, 1)
-        this.setState({
-          checkedNames: checkedNames,
-          uncheckedNames: this.state.uncheckedNames
-        });
-      }
-    } else if (this.state.uncheckedNames.length > 0) {
-      var uncheckedNames = [...this.state.uncheckedNames];
-      var index = uncheckedNames.indexOf(event.target.value);
-      if (index === -1) {
-        uncheckedNames.splice(index, 1)
-        this.setState({
-          uncheckedNames: uncheckedNames,
-          checkedNames: this.state.checkedNames
-        });
-      }
-    }
+  removeUncheckedNameFromList(item) {
+    var newUncheckedNames = this.state.uncheckedNames.filter((_newItem) => {
+      return _newItem != item
+    });
+    this.setState({
+      uncheckedNames: newUncheckedNames
+    });
   }
+
+  removeCheckedNameFromList(item) {
+    var newCheckedNames = this.state.checkedNames.filter((_newItem) => {
+      return _newItem != item
+    });
+    this.setState({
+      checkedNames: newCheckedNames
+    });
+  }
+
 
   render() {
 
@@ -160,15 +155,15 @@ class App extends React.Component<Props, State> {
                   this.state.uncheckedNames &&
                   this.state.uncheckedNames.map((name) => {
                     return (
-                      <React.Fragment>
+                      <div>
                         <div id="flex-container">
                           <div className="flex-item" key={name.toString()} onClick={this.onNameClick}>
                             {name}
                           </div>
                           <input className="checkbox" type="checkbox" defaultChecked={this.state.isCkecked}></input>
-                          <img className="clear-button" src={buttonClear} onClick={ (event) => this.removeNameFromList(event)} />
+                          <img className="clear-button" src={buttonClear} onClick={this.removeUncheckedNameFromList.bind(this, name)} />
                         </div>
-                      </React.Fragment>
+                      </div>
                     );
                   })
                 }
@@ -181,15 +176,15 @@ class App extends React.Component<Props, State> {
                   this.state.checkedNames &&
                   this.state.checkedNames.map((name) => {
                     return (
-                      <React.Fragment>
+                      <div>
                         <div id="flex-container">
                           <div className="flex-item" key={name.toString()} onClick={this.onNameClick}>
                             {name}
                           </div>
                           <input className="checkbox" type="checkbox" defaultChecked={this.state.isCkecked}></input>
-                          <img className="clear-button" src={buttonClear} onClick={ (event) => this.removeNameFromList(event)} />
+                          <img className="clear-button" src={buttonClear} onClick={this.removeCheckedNameFromList.bind(this, name)} />
                         </div>
-                      </React.Fragment>
+                      </div>
                     );
                   })
                 }
