@@ -119,10 +119,16 @@ class App extends React.Component<Props, State> {
     });
   }
 
-  onCheckboxChange = () => {
+  onCheckboxChange = (item) => {
 
     if (!this.state.isCkecked) {
-      console.log('name is checked');
+      var unceheckedNames = this.state.uncheckedNames;
+      var itemToReplace = unceheckedNames.splice(itemToReplace, 1);
+      unceheckedNames = unceheckedNames.concat(itemToReplace);
+      this.setState({
+        uncheckedNames: unceheckedNames
+      });
+      console.log(this.state.uncheckedNames);
     } else {
       console.log('name is unchecked');
     }
@@ -133,6 +139,7 @@ class App extends React.Component<Props, State> {
   }
 
   sortNames = () => {
+
     var sortedNamesUnchecked = this.state.uncheckedNames;
     sortedNamesUnchecked.sort();
 
@@ -176,7 +183,7 @@ class App extends React.Component<Props, State> {
                           <div className="flex-item" key={name.toString()} onClick={() => this.onNameClick(name)}>
                             {name}
                           </div>
-                          <input className="checkbox" type="checkbox" onChange={this.onCheckboxChange}></input>
+                          <input className="checkbox" type="checkbox" onChange={() => this.onCheckboxChange(name)} defaultChecked={this.state.isCkecked}></input>
                           <img className="clear-button" src={buttonClear} onClick={this.removeUncheckedNameFromList.bind(this, name)} />
                         </div>
                       </div>
@@ -200,7 +207,7 @@ class App extends React.Component<Props, State> {
                           <div className="flex-item" key={name.toString()} onClick={() => this.onNameClick(name)}>
                             {name}
                           </div>
-                          <input className="checkbox" type="checkbox" onChange={this.onCheckboxChange}></input>
+                          <input className="checkbox" type="checkbox" onChange={this.onCheckboxChange} defaultChecked={!this.state.isCkecked}></input>
                           <img className="clear-button" src={buttonClear} onClick={this.removeCheckedNameFromList.bind(this, name)} />
                         </div>
                       </div>
