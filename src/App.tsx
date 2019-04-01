@@ -89,14 +89,13 @@ class App extends React.Component<Props, State> {
       checkedNames: selectedName ? [...this.state.checkedNames, item] : this.state.checkedNames.filter(i => i !== item)
     });
 
-    if (selectedName === true) {
-      this.setState({
-        isCkecked: !this.state.isCkecked
-      });
-      console.log(this.state.isCkecked);
-    } else {
+    if (selectedName === true && !this.state.isCkecked) {
       this.setState({
         isCkecked: this.state.isCkecked
+      });
+    } else if (selectedName === false && this.state.isCkecked) {
+      this.setState({
+        isCkecked: !this.state.isCkecked
       });
     }
   }
