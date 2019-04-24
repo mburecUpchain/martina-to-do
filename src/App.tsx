@@ -122,19 +122,20 @@ class App extends React.Component<Props, State> {
 
     if (!this.state.isCkecked) {
       var unceheckedNames = this.state.uncheckedNames;
-      var itemToReplace = unceheckedNames.splice(itemToReplace, 1);
-      unceheckedNames = unceheckedNames.concat(itemToReplace);
-      this.setState({
-        uncheckedNames: unceheckedNames
-      });
-      console.log(this.state.uncheckedNames);
-    } else {
-      console.log('name is unchecked');
-    }
+      //za pomoć korišteno : https://stackoverflow.com/questions/23921683/javascript-move-an-item-of-an-array-to-the-front
 
-    this.setState({
-      isCkecked: !this.state.isCkecked
-    });
+      //ako je checkirani item na poziciji 0, pozicija se ne mijenja, a ako nije na poziciji 0
+      if (unceheckedNames.indexOf(item) > 0) {
+        //uzmemo index checkiranog itema i pomoću .splice mičemo iz polja
+        unceheckedNames.splice(unceheckedNames.indexOf(item), 1);
+        //vraćamo nazad item u polje na početak pomoću .unshift
+        unceheckedNames.unshift(item);
+      }
+      this.setState({
+        uncheckedNames: unceheckedNames,
+        checkedNames: this.state.checkedNames
+      });
+    } 
   }
 
   sortNames = () => {
