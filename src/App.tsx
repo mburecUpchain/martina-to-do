@@ -101,21 +101,32 @@ class App extends React.Component<Props, State> {
   }
 
   removeUncheckedNameFromList(item) {
-    var newUncheckedNames = this.state.uncheckedNames.filter((_newItem) => {
-      return _newItem != item
-    });
+    // var newUncheckedNames = this.state.uncheckedNames.filter((_newItem) => {
+    //   return _newItem != item
+    // });
+
+    var newUncheckedNames = this.state.uncheckedNames.splice(item, 1);
+
     this.setState({
       uncheckedNames: newUncheckedNames
     });
+
+    console.log(item);
   }
 
   removeCheckedNameFromList(item) {
-    var newCheckedNames = this.state.checkedNames.filter((_newItem) => {
-      return _newItem != item
-    });
+    // var newCheckedNames = this.state.checkedNames.filter((_newItem) => {
+    //   return _newItem != item
+    // });
+
+    var newCheckedNames = this.state.checkedNames;
+    newCheckedNames.splice(newCheckedNames.indexOf(item), 1);
+
     this.setState({
       checkedNames: newCheckedNames
     });
+
+    console.log(item);
   }
 
   getLastCheckTime = () => {
