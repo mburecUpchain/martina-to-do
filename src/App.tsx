@@ -118,13 +118,25 @@ class App extends React.Component<Props, State> {
     });
   }
 
+  getLastCheckTime = () => {
+    const lastCheckTime = new Date();
+    console.log(lastCheckTime);
+  }
+
+  getLastUncheckTime = () => {
+    const lastUncheckTime = new Date();
+    console.log(lastUncheckTime);
+  }
+
   onCheckboxChange = (item) => {
 
     //micanje itema na prvo mjesto u listi ako je checkbox označen
     //za pomoć korišteno : https://stackoverflow.com/questions/23921683/javascript-move-an-item-of-an-array-to-the-front
     if (!this.state.isCkecked) {
+
+      this.getLastCheckTime();
+
       var unceheckedNames = this.state.uncheckedNames;
-      //var checkedNames = this.state.checkedNames;
 
       //ako je checkirani item na poziciji 0, pozicija se ne mijenja, a ako nije na poziciji 0
       if (unceheckedNames.indexOf(item) > 0) {
@@ -137,15 +149,8 @@ class App extends React.Component<Props, State> {
           uncheckedNames: unceheckedNames
         });
       }
-
-      //   if (checkedNames.indexOf(item) > 0) {
-      //     checkedNames.splice(checkedNames.indexOf(item), 1);
-      //     checkedNames.unshift(item);
-
-      //     this.setState({
-      //       checkedNames: checkedNames
-      //     });
-      //   }
+    } else {
+      this.getLastUncheckTime();
     }
 
   }
