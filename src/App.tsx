@@ -160,8 +160,15 @@ class App extends React.Component<Props, State> {
           uncheckedNames: unceheckedNames
         });
       }
+      this.setState({
+        isCkecked: this.state.isCkecked
+      });
+
     } else {
       this.getLastUncheckTime();
+      this.setState({
+        isCkecked: !this.state.isCkecked
+      });
     }
 
   }
