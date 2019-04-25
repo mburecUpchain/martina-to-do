@@ -105,7 +105,9 @@ class App extends React.Component<Props, State> {
     //   return _newItem != item
     // });
 
-    var newUncheckedNames = this.state.uncheckedNames.splice(item, 1);
+    var newUncheckedNames = this.state.uncheckedNames;
+    newUncheckedNames.splice(newUncheckedNames.indexOf(item), 1);
+
 
     this.setState({
       uncheckedNames: newUncheckedNames
