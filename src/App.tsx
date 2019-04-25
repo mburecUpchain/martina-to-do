@@ -120,9 +120,11 @@ class App extends React.Component<Props, State> {
 
   onCheckboxChange = (item) => {
 
+    //micanje itema na prvo mjesto u listi ako je checkbox označen
+    //za pomoć korišteno : https://stackoverflow.com/questions/23921683/javascript-move-an-item-of-an-array-to-the-front
     if (!this.state.isCkecked) {
       var unceheckedNames = this.state.uncheckedNames;
-      //za pomoć korišteno : https://stackoverflow.com/questions/23921683/javascript-move-an-item-of-an-array-to-the-front
+      //var checkedNames = this.state.checkedNames;
 
       //ako je checkirani item na poziciji 0, pozicija se ne mijenja, a ako nije na poziciji 0
       if (unceheckedNames.indexOf(item) > 0) {
@@ -130,12 +132,22 @@ class App extends React.Component<Props, State> {
         unceheckedNames.splice(unceheckedNames.indexOf(item), 1);
         //vraćamo nazad item u polje na početak pomoću .unshift
         unceheckedNames.unshift(item);
+
+        this.setState({
+          uncheckedNames: unceheckedNames
+        });
       }
-      this.setState({
-        uncheckedNames: unceheckedNames,
-        checkedNames: this.state.checkedNames
-      });
-    } 
+
+      //   if (checkedNames.indexOf(item) > 0) {
+      //     checkedNames.splice(checkedNames.indexOf(item), 1);
+      //     checkedNames.unshift(item);
+
+      //     this.setState({
+      //       checkedNames: checkedNames
+      //     });
+      //   }
+    }
+
   }
 
   sortNames = () => {
