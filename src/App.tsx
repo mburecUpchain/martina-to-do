@@ -26,7 +26,6 @@ class App extends React.Component<Props, State> {
       checkedNames: [],
       isCkecked: false
     }
-
   }
 
   onHandleChange = (event) => {
@@ -145,6 +144,7 @@ class App extends React.Component<Props, State> {
 
     //micanje itema na prvo mjesto u listi ako je checkbox označen
     //za pomoć korišteno : https://stackoverflow.com/questions/23921683/javascript-move-an-item-of-an-array-to-the-front
+
     if (!this.state.isCkecked) {
 
       this.getLastCheckTime();
@@ -153,35 +153,56 @@ class App extends React.Component<Props, State> {
 
       //ako je checkirani item na poziciji 0, pozicija se ne mijenja, a ako nije na poziciji 0
       if (unceheckedNames.indexOf(item) > 0) {
-        //uzmemo index checkiranog itema i pomoću .splice mičemo iz polja
+        //uzmemo index checkiranog itema i pomoću .splice mičemo iz polja 
+        //splice - miče elemnt iz polja i na njegovo mjesto stavlja novi element vračajući izbrisani element
         unceheckedNames.splice(unceheckedNames.indexOf(item), 1);
         //vraćamo nazad item u polje na početak pomoću .unshift
         unceheckedNames.unshift(item);
 
         this.setState({
-          uncheckedNames: unceheckedNames
+          uncheckedNames: unceheckedNames,
+          isCkecked: this.state.isCkecked
         });
       }
-      this.setState({
-        isCkecked: this.state.isCkecked
-      });
-
-    } else {
-      this.getLastUncheckTime();
-      this.setState({
-        isCkecked: !this.state.isCkecked
-      });
     }
+  }
 
+  onCheckedCheckboxChange = (item) => {
+
+    if (this.state.isCkecked) {
+
+      this.getLastUncheckTime();
+
+      var checkedNames = this.state.checkedNames;
+
+      if (checkedNames.indexOf(item) > 0) {
+        checkedNames.splice(checkedNames.indexOf(item), 1);
+        checkedNames.unshift(item);
+
+        this.setState({
+          checkedNames: checkedNames,
+          isCkecked: !this.state.isCkecked
+        });
+      }
+    }
   }
 
   sortNames = () => {
 
     var sortedNamesUnchecked = this.state.uncheckedNames;
-    sortedNamesUnchecked.sort();
+    if (sortedNamesUnchecked.length > 0) {
+      sortedNamesUnchecked.sort();
+    } else {
+      window.alert("The unchecked list is empty. There is nothing to sort.");
+    }
+
 
     var sortedNamesChecked = this.state.checkedNames;
-    sortedNamesChecked.sort();
+    if (sortedNamesChecked.length > 0) {
+      sortedNamesChecked.sort();
+    } else {
+      window.alert("The checked list is empty. There is nothing to sort.");
+    }
 
     this.setState({
       uncheckedNames: sortedNamesUnchecked,
@@ -244,7 +265,7 @@ class App extends React.Component<Props, State> {
                           <div className="flex-item" key={name.toString()} onClick={() => this.onNameClick(name)}>
                             {name}
                           </div>
-                          <input className="checkbox" type="checkbox" onChange={this.onCheckboxChange} defaultChecked={!this.state.isCkecked}></input>
+                          <input className="checkbox" type="checkbox" onChange={() => this.onCheckedCheckboxChange(name)} defaultChecked={!this.state.isCkecked}></input>
                           <img className="clear-button" src={buttonClear} onClick={this.removeCheckedNameFromList.bind(this, name)} />
                         </div>
                       </div>
