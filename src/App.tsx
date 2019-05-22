@@ -143,13 +143,11 @@ class App extends React.Component<Props, State> {
   onCheckboxChange = (item) => {
 
     //micanje itema na prvo mjesto u listi ako je checkbox označen
-    //za pomoć korišteno : https://stackoverflow.com/questions/23921683/javascript-move-an-item-of-an-array-to-the-front
+    var unceheckedNames = this.state.uncheckedNames;
+    var checkedNames = this.state.checkedNames;
+    if (this.state.isCkecked) {
 
-    if (!this.state.isCkecked) {
-
-      this.getLastCheckTime();
-
-      var unceheckedNames = this.state.uncheckedNames;
+      this.getLastUncheckTime();
 
       //ako je checkirani item na poziciji 0, pozicija se ne mijenja, a ako nije na poziciji 0
       if (unceheckedNames.indexOf(item) > 0) {
@@ -160,32 +158,24 @@ class App extends React.Component<Props, State> {
         unceheckedNames.unshift(item);
 
         this.setState({
-          uncheckedNames: unceheckedNames,
-          isCkecked: this.state.isCkecked
+          uncheckedNames: unceheckedNames
         });
       }
-    }
-  }
-
-  onCheckedCheckboxChange = (item) => {
-
-    if (this.state.isCkecked) {
-
-      this.getLastUncheckTime();
-
-      var checkedNames = this.state.checkedNames;
-
-      if (checkedNames.indexOf(item) > 0) {
-        checkedNames.splice(checkedNames.indexOf(item), 1);
-        checkedNames.unshift(item);
-
+    } else if (!this.state.isCkecked) {
+     
+      console.log("nameee");
+      this.getLastCheckTime();
+      if (checkedNames.indexOf(item) < unceheckedNames.length) {
         this.setState({
-          checkedNames: checkedNames,
-          isCkecked: !this.state.isCkecked
+          checkedNames: checkedNames.concat(item)
         });
       }
     }
+    this.setState({
+      isCkecked: !this.state.isCkecked
+    });
   }
+
 
   sortNames = () => {
 
@@ -197,16 +187,16 @@ class App extends React.Component<Props, State> {
     }
 
 
-    var sortedNamesChecked = this.state.checkedNames;
-    if (sortedNamesChecked.length > 0) {
-      sortedNamesChecked.sort();
-    } else {
-      window.alert("The checked list is empty. There is nothing to sort.");
-    }
+    // var sortedNamesChecked = this.state.checkedNames;
+    // if (sortedNamesChecked.length > 0) {
+    //   sortedNamesChecked.sort();
+    // } else {
+    //   window.alert("The checked list is empty. There is nothing to sort.");
+    // }
 
     this.setState({
-      uncheckedNames: sortedNamesUnchecked,
-      checkedNames: sortedNamesChecked
+      uncheckedNames: sortedNamesUnchecked
+      //checkedNames: sortedNamesChecked
     });
 
   }
@@ -226,6 +216,7 @@ class App extends React.Component<Props, State> {
             <input type="text" className="input" value={this.state.value} onChange={(event) => this.onHandleChange(event)} onKeyPress={(event) => this.onKeyPress(event)} />
           </label>
           <button className="buttonSubmit" onClick={(event) => this.onSubmit(event)}>Insert</button>
+          <button className="buttonSubmit" onClick={this.sortNames}>Sort</button>
         </div>
         <div className="container">
           <div className="row">
@@ -238,7 +229,7 @@ class App extends React.Component<Props, State> {
                     return (
                       <div>
                         <div id="flex-container">
-                          <div className="flex-item" key={name.toString()} onClick={() => this.onNameClick(name)}>
+                          <div className="flex-item" key={name.toString()} /*onClick={() => this.onNameClick(name)}*/>
                             {name}
                           </div>
                           <input className="checkbox" type="checkbox" onChange={() => this.onCheckboxChange(name)} defaultChecked={this.state.isCkecked}></input>
@@ -250,7 +241,7 @@ class App extends React.Component<Props, State> {
                 }
               </div>
             </div>
-            <div className="spacer"></div>
+            {/* <div className="spacer"></div>
             <button className="button-sort" onClick={this.sortNames}>Sort</button>
             <div className="spacer"></div>
             <div className="column">
@@ -273,7 +264,7 @@ class App extends React.Component<Props, State> {
                   })
                 }
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
